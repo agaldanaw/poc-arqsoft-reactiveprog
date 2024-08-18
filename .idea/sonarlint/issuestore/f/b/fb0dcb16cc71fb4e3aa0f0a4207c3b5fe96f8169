@@ -1,11 +1,15 @@
 
-G	java:S106""+Replace this use of System.out by a logger.(ŒæŸ8¨é–2
-G	java:S106'"+Replace this use of System.out by a logger.(Ï×¾8©é–2
-L	java:S106+"+Replace this use of System.out by a logger.(ïæõµûÿÿÿÿ8©é–2
-L	java:S106/"+Replace this use of System.out by a logger.( œ€üÿÿÿÿ8©é–2
-e
-java:S16121"CReplace this lambda with method reference 'Main::storeTransaction'.(¬ÃÒ¼şÿÿÿÿ8ªé–2
-]	java:S125@"<This block of commented-out lines of code should be removed.(›âğ¬ÿÿÿÿÿ8¬é–2
-G	java:S106P"+Replace this use of System.out by a logger.(–¨Ô¸8®é–2
-@
-java:S1128	"Remove this duplicated import.(·äÍÆøÿÿÿÿ8¯é–2
+@	java:S106""+Replace this use of System.out by a logger.(ŒæŸ
+@	java:S106'"+Replace this use of System.out by a logger.(Ï×¾
+E	java:S106+"+Replace this use of System.out by a logger.(ïæõµûÿÿÿÿ
+E	java:S106/"+Replace this use of System.out by a logger.( œ€üÿÿÿÿ
+^
+java:S16121"CReplace this lambda with method reference 'Main::storeTransaction'.(¬ÃÒ¼şÿÿÿÿ
+V	java:S125@"<This block of commented-out lines of code should be removed.(›âğ¬ÿÿÿÿÿ
+@	java:S106P"+Replace this use of System.out by a logger.(–¨Ô¸
+9
+java:S1128	"Remove this duplicated import.(·äÍÆøÿÿÿÿ
+T
+java:S1128">Remove this unused import 'reactor.core.scheduler.Schedulers'.(¨à˜æ
+H
+java:S1128"-Remove this unused import 'java.util.Random'.(èøÉ›ùÿÿÿÿ
