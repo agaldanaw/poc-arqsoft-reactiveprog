@@ -42,6 +42,6 @@ public class TransactionHelpers {
         if (transaction.getAmount() > 0){
             return true;
         }
-        throw new IllegalArgumentException("The transaction's amount cannot be negative.");
+        throw new IllegalArgumentException("The transaction's amount cannot be negative");
     }
 }
