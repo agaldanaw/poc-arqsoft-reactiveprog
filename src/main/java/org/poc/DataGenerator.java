@@ -56,7 +56,8 @@ public class DataGenerator {
     private Transaction generateTransaction(String accountId) {
         String id = UUID.randomUUID().toString();
         double amount = NumbersHelpers.getRandomNumber(100, 10000); //In USD
-        double convertedAmount = Math.random() < 0.2 ? -amount : amount; // with 20% probability of be an invalid transaction
+        double probability = Math.random();
+        double convertedAmount = Double.compare(probability, 0.2) < 0? -amount : amount; // with 20% probability of be an invalid transaction
         return new Transaction(id, accountId, convertedAmount);
     }
 }
