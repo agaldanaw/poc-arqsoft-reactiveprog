@@ -1,15 +1,11 @@
 package org.poc;
 
-import java.util.Map;
-
-import reactor.core.publisher.Mono;
-
 public  class Transaction {
 
     private final String id;
     private final String accountId;
-    private final double amount; //IN USD
-    private final String customerName;
+    private double amount; //IN USD
+    private String customerName;
 
     public Transaction(String id, String accountId, double amount) {
         this(id, accountId, amount, "Unknown");
@@ -36,6 +32,14 @@ public  class Transaction {
 
     public String getCustomerName() {
         return customerName;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     @Override

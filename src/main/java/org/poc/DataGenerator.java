@@ -4,7 +4,7 @@ import java.util.*;
 
 public class DataGenerator {
 
-    public final ArrayList<String> NOMBRES = new ArrayList<>(Arrays.asList(
+    public final ArrayList<String> NAMES = new ArrayList<>(Arrays.asList(
             "Alejandro", "Beatriz", "Carlos", "Diana", "Eduardo", "Fernanda",
             "Gabriel", "Héctor", "Isabel", "Javier", "Karla", "Luis",
             "María", "Nicolás", "Olga", "Pablo", "Quetzal", "Raúl",
@@ -17,7 +17,7 @@ public class DataGenerator {
             "Yamil", "Zulema"
     ));
 
-    public final ArrayList<String> APELLIDOS = new ArrayList<>(Arrays.asList(
+    public final ArrayList<String> LAST_NAMES = new ArrayList<>(Arrays.asList(
             "García", "Martínez", "López", "Hernández", "González",
             "Pérez", "Rodríguez", "Sánchez", "Ramírez", "Torres",
             "Flores", "Rivera", "Gómez", "Díaz", "Cruz",
@@ -30,16 +30,19 @@ public class DataGenerator {
             "Ávila", "Carrillo", "Mejía", "Palacios"
     ));
 
+    //Generates multiples customers
     public Map<String, String> generateCustomerData(Integer amount) {
         Map<String, String> customerData = new HashMap<>();
         for (int i = 0; i < amount; i++) {
             String id = UUID.randomUUID().toString();
-            String name = NOMBRES.get(NumbersHelpers.getRandomNumber(0, NOMBRES.size() - 1)) + " " + APELLIDOS.get(NumbersHelpers.getRandomNumber(0, APELLIDOS.size() - 1));
+            String name = NAMES.get(NumbersHelpers.getRandomNumber(0, NAMES.size() - 1)) + " " 
+                + LAST_NAMES.get(NumbersHelpers.getRandomNumber(0, LAST_NAMES.size() - 1));
             customerData.put(id, name);
         }
         return customerData;
     }
 
+    //Generates multiples transactions
     public List<Transaction> generateTransactions(List<String> customerAccountIds, Integer amount) {
         List<Transaction> transactions = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
@@ -49,10 +52,11 @@ public class DataGenerator {
         return transactions;
     }
 
+    //Generates a transaction with customer accountId
     private Transaction generateTransaction(String accountId) {
         String id = UUID.randomUUID().toString();
         double amount = NumbersHelpers.getRandomNumber(100, 10000); //In USD
-        double convertedAmount = Math.random() < 0.2 ? -amount : amount;
+        double convertedAmount = Math.random() < 0.2 ? -amount : amount; // with 20% probability of be an invalid transaction
         return new Transaction(id, accountId, convertedAmount);
     }
 }

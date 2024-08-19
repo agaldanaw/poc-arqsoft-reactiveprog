@@ -11,7 +11,7 @@ import java.util.concurrent.CountDownLatch;
 public class Main {
 
     private static final Integer CLIENTS_AMOUNT = 1000;
-    private static final Integer TRANSACTIONS_AMOUNT = 1000;
+    private static final Integer TRANSACTIONS_AMOUNT = 100;
 
     public static void main(String[] args) {
 
@@ -30,7 +30,7 @@ public class Main {
             .filter(TransactionHelpers::isValidTransaction)
             .map(TransactionHelpers::convertToEuros)
             .onErrorContinue((throwable, obj) -> 
-                System.out.println("Error procesando " + obj + ": " + throwable.getMessage())
+                System.out.println("Error processing " + obj + ": " + throwable.getMessage())
             )
             .parallel()
             .runOn(Schedulers.parallel())
