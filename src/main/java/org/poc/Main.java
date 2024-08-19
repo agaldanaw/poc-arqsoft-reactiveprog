@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import org.LogHelper;
+
 public class Main {
 
-    private static final Integer CLIENTS_AMOUNT = 1000;
+    private static final Integer CLIENTS_AMOUNT = 50;
     private static final Integer TRANSACTIONS_AMOUNT = 100;
 
     public static void main(String[] args) {
@@ -20,33 +22,36 @@ public class Main {
         // Generate random data for customers and transactions
         Map<String, String> customerData = dataGenerator.generateCustomerData(CLIENTS_AMOUNT);
         List<String> keys = new ArrayList<>(customerData.keySet());
-
-        Flux<Transaction> transactionFlux = Flux.fromIterable(dataGenerator.generateTransactions(keys, TRANSACTIONS_AMOUNT));
+        var transactions = dataGenerator.generateTransactions(keys, TRANSACTIONS_AMOUNT);
+        
+        Flux<Transaction> transactionFlux = Flux.fromIterable(transactions);
 
         // Initialize the CountDownLatch; we need to block the main thread until completion to ensure the stream has time to finish
         CountDownLatch latch = new CountDownLatch(1);  
 
-        transactionFlux.flatMap(transaction -> TransactionHelpers.enrichTransaction(transaction, customerData))
-            .filter(TransactionHelpers::isValidTransaction)
-            .map(TransactionHelpers::convertToEuros)
-            .onErrorContinue((throwable, obj) -> 
-                System.out.println("Error processing " + obj + ": " + throwable.getMessage())
+        transactionFlux
+            .flatMap(transaction -> TransactionHelpers.EnrichTransaction(transaction, customerData))
+            .filter(TransactionHelpers::IsValidTransaction)
+            .map(TransactionHelpers::ConvertToEuros)
+            .onErrorContinue((throwable, transaction) -> 
+                LogHelper.Log("Error processing " + transaction + ": " + throwable.getMessage())
             )
             .parallel()
             .runOn(Schedulers.parallel())
-            .flatMap(TransactionHelpers::storeTransaction)
+            .flatMap(TransactionHelpers::StoreTransaction)
             .sequential()
             .doOnComplete(() -> {
-                System.out.println("Stream is about to complete");
+                LogHelper.Log("Stream is about to complete");
                 latch.countDown();
             })
             .subscribe(
                 null,
                 error -> {
-                    System.err.println("Flow encountered an error: " + error.getMessage());
+                    LogHelper.Log("Flow encountered an error: " + error.getMessage());
+                    System.err.println();
                     latch.countDown();
                 },
-                () -> System.out.println("Flow completed successfully!")
+                () -> LogHelper.Log("Flow completed successfully!")
             );
 
         try
@@ -55,11 +60,11 @@ public class Main {
         }
         catch(InterruptedException ex)
         {
-            System.out.println("Interrupted Exception Ocurred!");
+            LogHelper.Log("Interrupted Exception Ocurred!");
         }
         catch(Exception ex)
         {
-            System.out.println("Exception handled: " + ex.getMessage());
+            LogHelper.Log("Exception handled: " + ex.getMessage());
         }
     }
 }
