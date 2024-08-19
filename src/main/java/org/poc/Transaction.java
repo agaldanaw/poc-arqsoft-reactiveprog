@@ -1,10 +1,14 @@
 package org.poc;
 
+import java.util.Map;
+
+import reactor.core.publisher.Mono;
+
 public  class Transaction {
 
     private final String id;
     private final String accountId;
-    private final double amount;
+    private final double amount; //IN USD
     private final String customerName;
 
     public Transaction(String id, String accountId, double amount) {
@@ -36,6 +40,6 @@ public  class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{id='" + id + "', accountId='" + accountId + "', amount=" + amount + " EUR, customerName='" + customerName + "'}";
+        return "Transaction {id='" + id + "', accountId='" + accountId + "', amount=" + amount + " EUR, customerName='" + customerName + "'}";
     }
 }

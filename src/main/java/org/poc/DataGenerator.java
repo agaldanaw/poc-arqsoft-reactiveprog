@@ -4,7 +4,7 @@ import java.util.*;
 
 public class DataGenerator {
 
-    ArrayList<String> nombres = new ArrayList<>(Arrays.asList(
+    public final ArrayList<String> NOMBRES = new ArrayList<>(Arrays.asList(
             "Alejandro", "Beatriz", "Carlos", "Diana", "Eduardo", "Fernanda",
             "Gabriel", "Héctor", "Isabel", "Javier", "Karla", "Luis",
             "María", "Nicolás", "Olga", "Pablo", "Quetzal", "Raúl",
@@ -17,7 +17,7 @@ public class DataGenerator {
             "Yamil", "Zulema"
     ));
 
-    ArrayList<String> apellidos = new ArrayList<>(Arrays.asList(
+    public final ArrayList<String> APELLIDOS = new ArrayList<>(Arrays.asList(
             "García", "Martínez", "López", "Hernández", "González",
             "Pérez", "Rodríguez", "Sánchez", "Ramírez", "Torres",
             "Flores", "Rivera", "Gómez", "Díaz", "Cruz",
@@ -34,7 +34,7 @@ public class DataGenerator {
         Map<String, String> customerData = new HashMap<>();
         for (int i = 0; i < amount; i++) {
             String id = UUID.randomUUID().toString();
-            String name = nombres.get(getRandomNumber(0, nombres.size() - 1)) + " " + apellidos.get(getRandomNumber(0, apellidos.size() - 1));
+            String name = NOMBRES.get(NumbersHelpers.getRandomNumber(0, NOMBRES.size() - 1)) + " " + APELLIDOS.get(NumbersHelpers.getRandomNumber(0, APELLIDOS.size() - 1));
             customerData.put(id, name);
         }
         return customerData;
@@ -43,7 +43,7 @@ public class DataGenerator {
     public List<Transaction> generateTransactions(List<String> customerAccountIds, Integer amount) {
         List<Transaction> transactions = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
-            String accountId = customerAccountIds.get(getRandomNumber(0, customerAccountIds.size() - 1));
+            String accountId = customerAccountIds.get(NumbersHelpers.getRandomNumber(0, customerAccountIds.size() - 1));
             transactions.add(generateTransaction(accountId));
         }
         return transactions;
@@ -51,12 +51,8 @@ public class DataGenerator {
 
     private Transaction generateTransaction(String accountId) {
         String id = UUID.randomUUID().toString();
-        double amount = getRandomNumber(100, 10000);
+        double amount = NumbersHelpers.getRandomNumber(100, 10000); //In USD
         double convertedAmount = Math.random() < 0.2 ? -amount : amount;
         return new Transaction(id, accountId, convertedAmount);
-    }
-
-    private Integer getRandomNumber(Integer min, Integer max) {
-        return (int) ((Math.random() * (max - min)) + min);
     }
 }
